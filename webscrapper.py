@@ -17,12 +17,13 @@ def LinkedList():
     hotelName = driver.find_elements_by_class_name("property_title")
     price = driver.find_elements_by_class_name("price,__resizeWatch")
     review=driver.find_elements_by_class_name("review_count")
+    takingSaftyMeasure = driver.find_elements_by_class_name("_1shPZD63")
 
     head=None
     tail=None
 
-    for i,j,k in zip(hotelName,price,review):
-        NewNode=LinkedListNode(i.get_attribute("innerHTML"),j.get_attribute("innerHTML")[7:],k.get_attribute("innerHTML")[0:-7])
+    for i,j,k,l in zip(hotelName,price,review,takingSaftyMeasure):
+        NewNode=LinkedListNode(i.get_attribute("innerHTML"),j.get_attribute("innerHTML")[7:],k.get_attribute("innerHTML")[0:-7],l.get_attribute("innerHTML"))
         if head is None:
             head=NewNode
             tail=NewNode
@@ -32,7 +33,7 @@ def LinkedList():
     return head
 def printLL(head):
     while head is not None:
-        print(head.name,head.price,head.review)
+        print(head.name,head.price,head.review,head.takingSaftyMeasure)
         head=head.next
     print()
 
@@ -43,10 +44,6 @@ def printLL(head):
 
 
 #features=driver.find_elements_by_class_name("text")
-#takingSaftyMeasure=driver.find_elements_by_class_name("_1shPZD63")
 
 printLL(LinkedList())
-
-
-
 driver.close()
