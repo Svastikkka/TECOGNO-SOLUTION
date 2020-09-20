@@ -1,3 +1,4 @@
+import time
 import pandas as pd
 class LinkedListNode:
     def __init__(self,name,price=None,review=None,takingSaftyMeasure=None,pic=None,features=None):
@@ -8,13 +9,30 @@ class LinkedListNode:
         self.features=features
         self.takingSaftyMeasure=takingSaftyMeasure
         self.next=None
+
+
+
+
 from selenium import webdriver
 driver = webdriver.Chrome("/Users/manshusharma/Downloads/chromedriver")
 driver.get("https://www.tripadvisor.in/Hotels-g304551-New_Delhi_National_Capital_Territory_of_Delhi-Hotels.html")
 
 
+def scroll():
+    lenOfPage = driver.execute_script(
+        "window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
+    match = False
+    while (match == False):
+        lastCount = lenOfPage
+        time.sleep(10)
+        lenOfPage = driver.execute_script(
+            "window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
+        if lastCount == lenOfPage:
+            match = True
+
 def LinkedList():
-    hotelName = driver.find_elements_by_class_name("property_title")
+    scroll()
+    hotelName = driver.find_elements_by_class_name("property_title, prominent")
     price = driver.find_elements_by_class_name("price,__resizeWatch")
     review=driver.find_elements_by_class_name("review_count")
     takingSaftyMeasure = driver.find_elements_by_class_name("_1shPZD63")
@@ -59,8 +77,6 @@ def printLL(head):
         print(head.name,head.price,head.review,head.takingSaftyMeasure,head.pic)
         head=head.next
     print()
-
-#features=driver.find_elements_by_class_name("text")
 printLL(LinkedList())
 
 dict = {'hotel': hotel, 'price': price, 'review': review,'takingSaftyMeasure': takingSaftyMeasure, 'pic': pic}
@@ -68,5 +84,4 @@ df = pd.DataFrame(dict)
 
 # saving the dataframe
 df.to_csv('file1.csv')
-
 driver.close()
