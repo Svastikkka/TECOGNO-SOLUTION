@@ -14,6 +14,8 @@ class LinkedListNode:
 
 
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
+
 driver = webdriver.Chrome("/Users/manshusharma/Downloads/chromedriver")
 driver.get("https://www.tripadvisor.in/Hotels-g304551-New_Delhi_National_Capital_Territory_of_Delhi-Hotels.html")
 
